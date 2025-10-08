@@ -25,9 +25,12 @@ model User {
   emailVerified DateTime? @map("email_verified")
   image         String?
   password      String?
-  tests         Test[]
+  resetToken    String?
+  resetTokenExp DateTime?
+  bio           String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+  Test          Test[]
 
   @@map("users")
 }

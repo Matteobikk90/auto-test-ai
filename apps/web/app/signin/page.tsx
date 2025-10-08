@@ -1,4 +1,5 @@
 "use client";
+import Register from "@/register/page";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 
@@ -34,8 +35,9 @@ export default function SignIn() {
 
       <hr />
 
-      <button onClick={() => signIn("github")}>Sign in with GitHub</button>
-      <button onClick={() => signIn("google")}>Sign in with Google</button>
+      {/* <button onClick={() => signIn("github")}>Sign in with GitHub</button>
+      <button onClick={() => signIn("google")}>Sign in with Google</button> */}
+      <Register />
     </main>
   );
 }

@@ -1,3 +1,5 @@
+import LogoutButton from "@/components/signout";
+
 import { prisma } from "@repo/db";
 
 export default async function Dashboard() {
@@ -6,7 +8,8 @@ export default async function Dashboard() {
   return (
     <main className="p-6 text-xl font-semibold">
       Welcome to your dashboard
-      <div>{user?.name ?? "No user added yet"}</div>
+      <div>{user?.email ?? "No user added yet"}</div>
+      <LogoutButton />
     </main>
   );
 }

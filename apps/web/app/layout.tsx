@@ -1,4 +1,4 @@
-import SessionProviderWrapper from "@/components/providers/SessionProviderWrapper";
+import SessionProviderWrapper from "@/components/providers";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";

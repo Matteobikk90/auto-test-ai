@@ -5,6 +5,14 @@ const nextConfig = {
       "@": "./app",
     },
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**.mypinata.cloud",
+      },
+    ],
+  },
 };
 
 export default nextConfig;
