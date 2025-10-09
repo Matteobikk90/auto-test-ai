@@ -13,12 +13,15 @@
   "dependencies": {
     "@repo/db": "workspace:*",
     "@repo/ui": "workspace:*",
+    "@tanstack/react-query": "^5.90.2",
+    "axios": "^1.12.2",
     "bcryptjs": "^3.0.2",
     "next": "^15.5.0",
     "next-auth": "^4.24.11",
     "pinata": "^2.5.1",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
