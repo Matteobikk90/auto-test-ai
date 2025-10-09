@@ -1,11 +1,17 @@
 "use client";
-import Register from "@/register/page";
+import { useStore } from "@/store";
 import { signIn } from "next-auth/react";
-import { useState } from "react";
+import Link from "next/link";
+import { useShallow } from "zustand/shallow";
 
 export default function SignIn() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { email, password, setField } = useStore(
+    useShallow(({ email, password, setField }) => ({
+      email,
+      password,
+      setField,
+    }))
+  );
 
   return (
     <main className="flex flex-col items-center p-6">
@@ -20,15 +26,17 @@ export default function SignIn() {
           });
         }}>
         <input
+          required
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="email"
+          onChange={({ target }) => setField("email", target.value)}
+          placeholder="Email"
         />
         <input
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          required
           type="password"
-          placeholder="password"
+          value={password}
+          onChange={({ target }) => setField("password", target.value)}
+          placeholder="Password"
         />
         <button type="submit">Sign in</button>
       </form>
@@ -37,7 +45,12 @@ export default function SignIn() {
 
       {/* <button onClick={() => signIn("github")}>Sign in with GitHub</button>
       <button onClick={() => signIn("google")}>Sign in with Google</button> */}
-      <Register />
+      <p className="text-sm mt-3">
+        Don’t have an account?{" "}
+        <Link href="/register" className="underline text-blue-600">
+          Sign up
+        </Link>
+      </p>
     </main>
   );
 }

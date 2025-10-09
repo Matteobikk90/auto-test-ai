@@ -1,28 +1,49 @@
 "use client";
 import ImageUpload from "@/components/imageUpload";
+import { register } from "@/queries/register";
+import { useStore } from "@/store";
+import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
-import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useShallow } from "zustand/shallow";
 
 export default function Register() {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: "",
-    bio: "",
-    image: "",
+  const router = useRouter();
+  const { email, password, name, bio, image, setField, resetAuthForm } =
+    useStore(
+      useShallow(
+        ({ email, password, name, bio, image, setField, resetAuthForm }) => ({
+          email,
+          password,
+          name,
+          bio,
+          image,
+          setField,
+          resetAuthForm,
+        })
+      )
+    );
+
+  const { mutate } = useMutation({
+    mutationFn: register,
+    onSuccess: () => {
+      resetAuthForm();
+      router.push("/signin");
+    },
+    onError: (error: Error) => {},
   });
-  const [message, setMessage] = useState("");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const res = await fetch("/api/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
+
+    mutate({
+      email,
+      password,
+      name,
+      bio,
+      image,
     });
-    const data = await res.json();
-    if (res.ok) setMessage("✅ Account created. You can sign in now.");
-    else setMessage(data.error || "Registration failed");
   }
 
   return (
@@ -30,44 +51,45 @@ export default function Register() {
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-2">
         <input
-          value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
+          required
+          value={name}
+          onChange={({ target }) => setField("name", target.value)}
           placeholder="Name"
         />
         <input
-          value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
+          required
+          value={email}
+          onChange={({ target }) => setField("email", target.value)}
           placeholder="Email"
         />
         <input
+          required
           type="password"
-          value={form.password}
-          onChange={(e) => setForm({ ...form, password: e.target.value })}
+          value={password}
+          onChange={({ target }) => setField("password", target.value)}
           placeholder="Password"
         />
         <textarea
           placeholder="Bio"
-          value={form.bio}
-          onChange={(e) => setForm({ ...form, bio: e.target.value })}
+          value={bio}
+          onChange={({ target }) => setField("bio", target.value)}
         />
 
-        <ImageUpload
-          onUpload={(url) => setForm((prev) => ({ ...prev, image: url }))}
-        />
+        <ImageUpload onUpload={(url) => setField("image", url)} />
 
-        {form.image && (
-          <Image
-            src={form.image}
-            alt="Uploaded image"
-            width="120"
-            height="120"
-          />
+        {image && (
+          <Image src={image} alt="Uploaded image" width="120" height="120" />
         )}
 
         <button type="submit">Register</button>
       </form>
 
-      <p>{message}</p>
+      <p className="text-sm mt-3">
+        Already have an account?{" "}
+        <Link href="/signin" className="underline text-blue-600">
+          Sign in
+        </Link>
+      </p>
     </main>
   );
 }

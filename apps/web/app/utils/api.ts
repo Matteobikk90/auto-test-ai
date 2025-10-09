@@ -30,7 +30,6 @@ export const axiosRequest = async <TResponse, TBody = unknown>(
     if (isAxiosError(error)) {
       if (error.code === "ERR_CANCELED") {
         console.warn("Request canceled");
-        return undefined;
       }
       console.error(
         `Axios error: ${error.response?.status || "Unknown"} - ${error.message}`
@@ -45,14 +44,22 @@ export const axiosRequest = async <TResponse, TBody = unknown>(
 };
 
 // Convenience helpers
-export const axiosGet = async <T>(url: string, signal?: AbortSignal) =>
-  axiosRequest<T>("GET", url, undefined, signal);
+export const axiosGet = async <TResponse>(url: string, signal?: AbortSignal) =>
+  axiosRequest<TResponse>("GET", url, undefined, signal);
 
-export const axiosPost = async <TResponse, TBody>(url: string, data: TBody) =>
-  axiosRequest<TResponse, TBody>("POST", url, data);
+export const axiosPost = async <TResponse, TBody>(
+  url: string,
+  data: TBody,
+  signal?: AbortSignal
+) => axiosRequest<TResponse, TBody>("POST", url, data, signal);
 
-export const axiosPut = async <TResponse, TBody>(url: string, data: TBody) =>
-  axiosRequest<TResponse, TBody>("PUT", url, data);
+export const axiosPut = async <TResponse, TBody>(
+  url: string,
+  data: TBody,
+  signal?: AbortSignal
+) => axiosRequest<TResponse, TBody>("PUT", url, data, signal);
 
-export const axiosDelete = async (url: string, signal?: AbortSignal) =>
-  axiosRequest<void>("DELETE", url, undefined, signal);
+export const axiosDelete = async <TResponse>(
+  url: string,
+  signal?: AbortSignal
+) => axiosRequest<TResponse>("DELETE", url, undefined, signal);
