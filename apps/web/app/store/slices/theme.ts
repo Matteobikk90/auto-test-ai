@@ -3,9 +3,14 @@ import type { StateCreator } from "zustand";
 
 const createThemeSlice: StateCreator<ThemeSliceType> = (set) => ({
   theme: "light",
+  font: "retro",
   toggleTheme: () =>
-    set((state) => ({
-      theme: state.theme === "light" ? "dark" : "light",
+    set(({ theme }) => ({
+      theme: theme === "light" ? "dark" : "light",
+    })),
+  toggleFont: () =>
+    set(({ font }) => ({
+      font: font === "retro" ? "modern" : "retro",
     })),
 });
 

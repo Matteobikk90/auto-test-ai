@@ -12,8 +12,9 @@ export const useStore = create<StoreState>()(
     })),
     {
       name: "global-store",
-      partialize: ({ theme }) => ({
+      partialize: ({ theme, font }) => ({
         theme,
+        font,
       }),
     }
   )

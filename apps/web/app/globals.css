@@ -1,37 +1,60 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --background: #ffffff;
+  --foreground: #000b27;
+
+  --primary: #5256be; /* blue-100 */
+  --secondary: #4fa77e; /* green-100 */
+  --accent: #ff8649; /* orange-100 */
+}
+
+[data-font="retro"] {
+  font-family: "Bitcount", sans-serif;
+}
+[data-font="modern"] {
+  font-family: "Roboto", "Roboto Fallback", sans-serif;
+}
+
+[data-theme="dark"] {
+  --background: #000b27;
+  --foreground: #ffffff;
+
+  --primary: #eeeef8; /* blue-10 */
+  --secondary: #eef6f2; /* green-10 */
+  --accent: #fef8ee; /* orange-10 */
 }
 
 html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
+  @apply bg-background text-foreground relative flex h-full flex-col transition;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  background: linear-gradient(
+    180deg,
+    var(--background) 0%,
+    color-mix(in srgb, var(--background) 85%, var(--primary)) 100%
+  );
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+.button {
+  @apply bg-primary text-background rounded-md px-3 py-1.5 text-sm font-medium transition-colors hover:opacity-90;
+}
 
-  .imgLight {
-    display: none;
-  }
-  .imgDark {
-    display: unset;
-  }
+aside {
+  @apply border-foreground/20 bg-background/80 text-foreground z-10 mt-4 w-56 space-y-4 rounded-lg border p-4 text-sm shadow-lg backdrop-blur-md;
+}
+
+form {
+  @apply bg-background/95 text-foreground border-foreground/10 m-auto w-full max-w-md space-y-6 rounded-2xl border p-8 shadow-xl backdrop-blur-sm;
 }

@@ -1,4 +1,4 @@
-import LogoutButton from "@/components/signout";
+import LogoutButton from "@/components/sign-out";
 
 import { prisma } from "@repo/db";
 

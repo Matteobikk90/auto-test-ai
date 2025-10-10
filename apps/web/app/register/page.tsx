@@ -1,5 +1,5 @@
 "use client";
-import ImageUpload from "@/components/imageUpload";
+import ImageUpload from "@/components/image-upload";
 import { register } from "@/queries/register";
 import { useStore } from "@/store";
 import { useMutation } from "@tanstack/react-query";
