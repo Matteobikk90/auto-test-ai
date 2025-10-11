@@ -1,4 +1,6 @@
 "use client";
+import { Button } from "@repo/ui/components/shadcn/button";
+import { Input } from "@repo/ui/components/shadcn/input";
 import { useRef, useState } from "react";
 
 export default function ImageUpload({
@@ -33,24 +35,24 @@ export default function ImageUpload({
 
   return (
     <div className="flex flex-col gap-2">
-      <input
+      <Input
         ref={fileInputRef}
         type="file"
         accept="image/*"
         hidden
         onChange={(e) => setFile(e.target.files?.[0] || null)}
       />
-      <button
+      <Button
         type="button"
         disabled={uploading}
         onClick={() => fileInputRef.current?.click()}>
         {uploading ? "Uploading..." : "Select Image"}
-      </button>
+      </Button>
 
       {file && (
-        <button type="button" disabled={uploading} onClick={uploadFile}>
+        <Button type="button" disabled={uploading} onClick={uploadFile}>
           Upload
-        </button>
+        </Button>
       )}
     </div>
   );
