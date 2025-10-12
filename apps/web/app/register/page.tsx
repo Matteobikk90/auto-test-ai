@@ -19,7 +19,10 @@ export default function Register() {
 
   const { mutate } = useMutation({
     mutationFn: register,
-    onSuccess: () => router.push("/signin"),
+    onSuccess: () => {
+      form.reset();
+      router.push("/signin");
+    },
   });
 
   const form = useForm({
