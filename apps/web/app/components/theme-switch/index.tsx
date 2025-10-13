@@ -1,8 +1,16 @@
 "use client";
 
 import { useStore } from "@/store";
-import { MoonIcon, SunIcon, TextAaIcon } from "@phosphor-icons/react";
+import {
+  JoystickIcon,
+  MoonIcon,
+  SunIcon,
+  TextAaIcon,
+  UserIcon,
+} from "@phosphor-icons/react";
+import { Button } from "@repo/ui/components/shadcn/button";
 import { useTheme } from "next-themes";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useShallow } from "zustand/shallow";
 
@@ -21,9 +29,10 @@ export default function ThemeToggleButton() {
   const isRetro = font === "retro";
 
   return (
-    <>
-      <button
-        className="bg-background button rounded-md border !p-1 shadow-md"
+    <div className="flex items-center gap-2">
+      <Button
+        size="icon"
+        variant="outline"
         onClick={() => setTheme(isDark ? "light" : "dark")}
         aria-label="toggle-theme">
         {isDark ? (
@@ -31,16 +40,24 @@ export default function ThemeToggleButton() {
         ) : (
           <MoonIcon className="size-5" weight="duotone" />
         )}
-      </button>
-      <button
-        className="bg-background button rounded-md border !p-1 shadow-md"
+      </Button>
+
+      <Button
+        size="icon"
+        variant="outline"
         onClick={toggleFont}
         aria-label="toggle-font">
-        <TextAaIcon
-          className="size-5"
-          weight={isRetro ? "duotone" : "regular"}
-        />
-      </button>
-    </>
+        {isRetro ? (
+          <TextAaIcon className="size-5" weight={"duotone"} />
+        ) : (
+          <JoystickIcon className="size-5" weight="duotone" />
+        )}
+      </Button>
+      <Link
+        href="/user"
+        className="flex items-center gap-4 p-1.5 rounded-md border">
+        <UserIcon weight="duotone" className="size-5" />
+      </Link>
+    </div>
   );
 }

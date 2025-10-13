@@ -44,7 +44,7 @@ export default function SignIn() {
 
         <form.Field name="email">
           {(field) => (
-            <>
+            <div className="flex flex-col gap-1">
               <Label htmlFor={field.name}>Email</Label>
               <Input
                 id={field.name}
@@ -55,13 +55,13 @@ export default function SignIn() {
                 placeholder="you@example.com"
               />
               <FieldInfo field={field} />
-            </>
+            </div>
           )}
         </form.Field>
 
         <form.Field name="password">
           {(field) => (
-            <>
+            <div className="flex flex-col gap-1">
               <Label htmlFor={field.name}>Password</Label>
               <Input
                 id={field.name}
@@ -73,7 +73,7 @@ export default function SignIn() {
                 placeholder="••••••••"
               />
               <FieldInfo field={field} />
-            </>
+            </div>
           )}
         </form.Field>
 

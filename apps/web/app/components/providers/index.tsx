@@ -1,5 +1,6 @@
 "use client";
 
+import Header from "@/components/header";
 import { queryClient } from "@/config/queryClient";
 import { useApplyFont } from "@/hooks/useApplyFont";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -15,7 +16,10 @@ export default function SessionProviderWrapper({
   return (
     <SessionProvider>
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <Header />
+          <main>{children}</main>
+        </ThemeProvider>
       </QueryClientProvider>
     </SessionProvider>
   );
