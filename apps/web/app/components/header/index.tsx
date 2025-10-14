@@ -9,11 +9,9 @@ export default function Header() {
         <RobotIcon weight="duotone" className="size-6 text-primary" />
         <div>
           <h1 className="text-lg">Auto Test AI</h1>
-
           <h2>Evaluate your code smartly</h2>
         </div>
       </Link>
-
       <ThemeToggleButton />
     </header>
   );

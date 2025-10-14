@@ -4,6 +4,7 @@ import { signInSchema } from "@/validations/signin";
 import { Button } from "@repo/ui/components/shadcn/button";
 import { Input } from "@repo/ui/components/shadcn/input";
 import { Label } from "@repo/ui/components/shadcn/label";
+import { toast } from "@repo/ui/components/shadcn/sonner";
 import { useForm } from "@tanstack/react-form";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
@@ -27,13 +28,20 @@ export default function SignIn() {
         password: value.password,
       });
 
-      if (result?.ok) router.push("/dashboard");
-      else alert("Invalid credentials");
+      if (result?.ok) {
+        toast.success("Signed in", { duration: 2000 });
+        router.push("/dashboard");
+      } else {
+        toast.error("Sign-in failed", {
+          description: result?.error || "Invalid credentials",
+          duration: 2500,
+        });
+      }
     },
   });
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen p-6">
+    <main className="flex flex-col items-center justify-center p-4 flex-1">
       <form
         onSubmit={(e) => {
           e.preventDefault();

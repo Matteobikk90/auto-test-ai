@@ -7,6 +7,7 @@ import { registerSchema } from "@/validations/register";
 import { Button } from "@repo/ui/components/shadcn/button";
 import { Input } from "@repo/ui/components/shadcn/input";
 import { Label } from "@repo/ui/components/shadcn/label";
+import { toast } from "@repo/ui/components/shadcn/sonner";
 import { Textarea } from "@repo/ui/components/shadcn/textarea";
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
@@ -20,8 +21,13 @@ export default function Register() {
   const { mutate } = useMutation({
     mutationFn: register,
     onSuccess: () => {
+      toast.success("Account created", { duration: 2000 });
       form.reset();
       router.push("/signin");
+    },
+    onError: (err) => {
+      const msg = err instanceof Error ? err.message : String(err);
+      toast.error("Registration failed", { description: msg, duration: 2500 });
     },
   });
 
@@ -40,7 +46,7 @@ export default function Register() {
   });
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen p-6">
+    <main className="flex flex-col items-center justify-center p-4 flex-1">
       <form
         onSubmit={(e) => {
           e.preventDefault();

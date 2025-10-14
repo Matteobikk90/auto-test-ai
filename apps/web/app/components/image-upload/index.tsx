@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@repo/ui/components/shadcn/button";
 import { Input } from "@repo/ui/components/shadcn/input";
+import { toast } from "@repo/ui/components/shadcn/sonner";
 import { useRef, useState } from "react";
 
 export default function ImageUpload({
@@ -13,7 +14,10 @@ export default function ImageUpload({
   const [uploading, setUploading] = useState(false);
 
   async function uploadFile() {
-    if (!file) return alert("No file selected");
+    if (!file)
+      return toast.error("No file selected", {
+        duration: 2000,
+      });
     setUploading(true);
 
     try {
@@ -26,8 +30,8 @@ export default function ImageUpload({
       if (!res.ok) throw new Error(json.error || "Upload failed");
       onUpload(json.url);
     } catch (err) {
-      console.error(err);
-      alert("Error uploading file");
+      const msg = err instanceof Error ? err.message : String(err);
+      toast.error("Upload failed", { description: msg, duration: 2000 });
     } finally {
       setUploading(false);
     }

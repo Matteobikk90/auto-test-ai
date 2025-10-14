@@ -1,16 +1,15 @@
 "use client";
 
+import { UserLink } from "@/components/user";
 import { useStore } from "@/store";
 import {
   JoystickIcon,
   MoonIcon,
   SunIcon,
   TextAaIcon,
-  UserIcon,
 } from "@phosphor-icons/react";
 import { Button } from "@repo/ui/components/shadcn/button";
 import { useTheme } from "next-themes";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useShallow } from "zustand/shallow";
 
@@ -53,11 +52,7 @@ export default function ThemeToggleButton() {
           <JoystickIcon className="size-5" weight="duotone" />
         )}
       </Button>
-      <Link
-        href="/user"
-        className="flex items-center gap-4 p-1.5 rounded-md border">
-        <UserIcon weight="duotone" className="size-5" />
-      </Link>
+      <UserLink />
     </div>
   );
 }
