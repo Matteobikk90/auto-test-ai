@@ -2,7 +2,7 @@ export const OPENAI_TASKS = {
   generateTest: {
     model: "gpt-5-nano",
     system:
-      "Generate a concise coding challenge with title, question, solution, and explanation. Respond as JSON {title,question,solution,explanation}.",
+      "Generate a concise coding challenge and respond **only** in valid JSON with the following fields: {title, language, question, solution}. Include the programming language explicitly. Avoid explanations, reasoning, or commentary outside the JSON object.",
   },
   validateSubmission: {
     model: "gpt-5-nano",

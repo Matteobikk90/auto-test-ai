@@ -10,7 +10,7 @@ export async function POST(req: Request) {
   if (!session?.user?.email)
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const { prompt } = await req.json();
+  const { prompt, difficulty = 2 } = await req.json();
   if (!prompt)
     return NextResponse.json({ error: "Missing prompt" }, { status: 400 });
 
@@ -20,7 +20,9 @@ export async function POST(req: Request) {
       {
         role: "user",
         content: JSON.stringify({
-          instructions: OPENAI_TASKS.generateTest.system,
+          instructions: `${OPENAI_TASKS.generateTest.system}
+          The desired difficulty level is ${difficulty}/3 
+          (1 = easy, 2 = medium, 3 = hard).`,
           prompt,
         }),
       },
@@ -38,11 +40,10 @@ export async function POST(req: Request) {
     data: {
       userId: user!.id,
       title: result.title || "Untitled test",
-      language: "typescript",
+      language: result.language || "",
       question: result.question || "",
       prompt,
       solution: result.solution || "",
-      explanation: result.explanation || "",
     },
   });
 
