@@ -52,13 +52,15 @@ export default function Register() {
           e.preventDefault();
           form.handleSubmit();
         }}
-        className="w-full max-w-md space-y-6 bg-background p-8 rounded-xl shadow-lg border border-border">
+        className="w-full max-w-md !space-y-4 bg-background p-8 rounded-xl shadow-lg border border-border">
         <h1 className="text-2xl font-semibold text-center">Create Account</h1>
 
         <form.Field name="name">
           {(field) => (
             <div className="flex flex-col gap-1">
-              <Label htmlFor={field.name}>Name</Label>
+              <Label htmlFor={field.name}>
+                Name<sup>*</sup>
+              </Label>
               <Input
                 id={field.name}
                 name={field.name}
@@ -74,7 +76,9 @@ export default function Register() {
         <form.Field name="email">
           {(field) => (
             <div className="flex flex-col gap-1">
-              <Label htmlFor={field.name}>Email</Label>
+              <Label htmlFor={field.name}>
+                Email<sup>*</sup>
+              </Label>
               <Input
                 id={field.name}
                 name={field.name}
@@ -90,7 +94,9 @@ export default function Register() {
         <form.Field name="password">
           {(field) => (
             <div className="flex flex-col gap-1">
-              <Label htmlFor={field.name}>Password</Label>
+              <Label htmlFor={field.name}>
+                Password<sup>*</sup>
+              </Label>
               <Input
                 id={field.name}
                 name={field.name}
@@ -124,16 +130,16 @@ export default function Register() {
           {(field) => (
             <div className="flex flex-col gap-1">
               <Label>Profile image</Label>
-              <ImageUpload onUpload={(url) => field.handleChange(url)} />
               {field.state.value && (
                 <Image
                   src={field.state.value}
                   alt="Uploaded"
                   width={100}
                   height={100}
-                  className="rounded-md mt-2"
+                  className="rounded-md mt-2 mx-auto object-cover"
                 />
               )}
+              <ImageUpload onUpload={(url) => field.handleChange(url)} />
               <FieldInfo field={field} />
             </div>
           )}

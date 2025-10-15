@@ -1,11 +1,12 @@
-import { Bitcount, Roboto } from "next/font/google";
+import { Bitcount, Lacquer } from "next/font/google";
 
 export const retro = Bitcount({
   subsets: ["latin"],
   variable: "--font-retro",
 });
 
-export const modern = Roboto({
+export const modern = Lacquer({
   subsets: ["latin"],
   variable: "--font-modern",
+  weight: ["400"],
 });

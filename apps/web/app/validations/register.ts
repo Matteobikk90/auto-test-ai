@@ -5,5 +5,7 @@ export const registerSchema = object({
   email: email("Invalid email"),
   password: string().min(6, "Password must be at least 6 characters"),
   bio: string(),
-  image: url("Invalid image URL"),
+  image: string().refine((val) => val === "" || url().safeParse(val).success, {
+    message: "Invalid image URL",
+  }),
 });

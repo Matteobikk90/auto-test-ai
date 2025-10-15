@@ -47,7 +47,7 @@ export default function SignIn() {
           e.preventDefault();
           form.handleSubmit();
         }}
-        className="w-full max-w-md space-y-6 bg-background p-8 rounded-xl shadow-lg border border-border">
+        className="w-full max-w-md !space-y-4 bg-background p-8 rounded-xl shadow-lg border border-border">
         <h1 className="text-2xl font-semibold text-center">Sign in</h1>
 
         <form.Field name="email">

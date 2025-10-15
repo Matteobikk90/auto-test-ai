@@ -46,11 +46,7 @@ export default function ThemeToggleButton() {
         variant="outline"
         onClick={toggleFont}
         aria-label="toggle-font">
-        {isRetro ? (
-          <TextAaIcon className="size-5" weight={"duotone"} />
-        ) : (
-          <JoystickIcon className="size-5" weight="duotone" />
-        )}
+        <TextAaIcon className="size-5" weight={"duotone"} />
       </Button>
       <UserLink />
     </div>
