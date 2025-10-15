@@ -16,7 +16,8 @@
         "PINATA_API_KEY",
         "PINATA_API_SECRET",
         "PINATA_API_JWT",
-        "PINATA_GATEWAY"
+        "PINATA_GATEWAY",
+        "OPEN_AI_KEY"
       ]
     },
     "lint": {

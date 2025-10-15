@@ -19,18 +19,19 @@ datasource db {
 // ─────────────────────────────
 
 model User {
-  id            String    @id @default(cuid())
+  id            String       @id @default(cuid())
   name          String?
-  email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
+  email         String?      @unique
+  emailVerified DateTime?    @map("email_verified")
   image         String?
   password      String?
   resetToken    String?
   resetTokenExp DateTime?
   bio           String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
   Test          Test[]
+  Submission    Submission[]
 
   @@map("users")
 }
@@ -47,7 +48,23 @@ model Test {
   updatedAt   DateTime @updatedAt
   userId      String
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  submissions Submission[]
 
   @@map("test")
+}
+
+model Submission {
+  id        Int      @id @default(autoincrement())
+  code      String
+  feedback  String?
+  passed    Boolean?
+  createdAt DateTime @default(now())
+  userId    String
+  testId    Int
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  test Test @relation(fields: [testId], references: [id], onDelete: Cascade)
+
+  @@map("submission")
 }

@@ -2,12 +2,7 @@
 
 import { UserLink } from "@/components/user";
 import { useStore } from "@/store";
-import {
-  JoystickIcon,
-  MoonIcon,
-  SunIcon,
-  TextAaIcon,
-} from "@phosphor-icons/react";
+import { MoonIcon, SunIcon, TextAaIcon } from "@phosphor-icons/react";
 import { Button } from "@repo/ui/components/shadcn/button";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
