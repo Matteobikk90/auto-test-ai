@@ -1,8 +1,10 @@
+import { URL_ENDPOINTS } from "@/constants/urls";
+
 export async function generateTest(values: {
   prompt: string;
   difficulty: number;
 }) {
-  const res = await fetch("/api/generate-test", {
+  const res = await fetch(URL_ENDPOINTS.generateTest, {
     method: "POST",
     body: JSON.stringify(values),
   });

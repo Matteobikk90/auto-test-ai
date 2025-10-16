@@ -1,31 +1,26 @@
+"use client";
+
 import GenerateTest from "@/components/generate-test";
-import { authOptions } from "@/config/auth";
-import { prisma } from "@repo/db";
-import { getServerSession } from "next-auth";
+import { getTests } from "@/queries/tests";
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 
-export default async function Dashboard() {
-  const session = await getServerSession(authOptions);
-  if (!session?.user?.email)
-    return (
-      <main className="p-6 text-xl font-semibold">
-        Unauthorized. <Link href="/signin">Sign in</Link>
-      </main>
-    );
-
-  const user = await prisma.user.findUnique({
-    where: { email: session.user.email },
-    include: { Test: true },
+export default function Dashboard() {
+  const { data, isLoading } = useQuery({
+    queryKey: ["tests"],
+    queryFn: getTests,
   });
 
+  if (isLoading) return <>Loading...</>;
+
   return (
-    <main>
-      <h1 className="text-2xl font-semibold">Welcome to your dashboard</h1>
+    <>
+      <h2 className="text-2xl font-semibold">Welcome to your dashboard</h2>
       <p className="text-foreground">Your generated tests:</p>
 
-      {user?.Test?.length ? (
+      {data?.length ? (
         <ul className="flex gap-4">
-          {user.Test.map(({ id, title, question, language }) => (
+          {data?.map(({ id, title, question, language }) => (
             <li key={id} className="border p-4 rounded-md shadow-sm max-w-2xl">
               <div className="flex justify-between gap-2">
                 <h3 className="text-xl font-semibold">{title}</h3>
@@ -45,6 +40,6 @@ export default async function Dashboard() {
       )}
 
       <GenerateTest />
-    </main>
+    </>
   );
 }
