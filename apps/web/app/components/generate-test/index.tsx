@@ -1,7 +1,7 @@
 "use client";
 
+import { testDifficulties } from "@/constants/tests";
 import { generateTest } from "@/queries/generate-test";
-import type { TestType } from "@/types/test";
 import { FieldInfo } from "@/utils/form";
 import { generateSchema } from "@/validations/generate-test";
 import { StarIcon } from "@phosphor-icons/react";
@@ -15,15 +15,13 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 
 export default function GenerateTest() {
-  const [test, setTest] = useState<TestType | null>(null);
-  const [difficulty, setDifficulty] = useState<number>(2);
+  const [difficulty, setDifficulty] = useState(2);
 
-  const { mutate } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn: generateTest,
-    onSuccess: (data) => {
+    onSuccess: () => {
       toast.success("Test created successfully");
       form.reset();
-      setTest(data);
     },
     onError: (err) => {
       const msg = err instanceof Error ? err.message : String(err);
@@ -34,79 +32,83 @@ export default function GenerateTest() {
   const form = useForm({
     defaultValues: { prompt: "" },
     validators: { onChange: generateSchema },
-    onSubmit: ({ value }) => mutate({ ...value, difficulty }),
+    onSubmit: ({ value }) => mutateAsync({ ...value, difficulty }),
   });
 
   return (
-    <main className="flex flex-col items-center justify-start p-6 flex-1">
-      {test && (
-        <article className="mt-8 w-full max-w-2xl space-y-3 border rounded-md p-6 shadow-md">
-          <div className="flex justify-between gap-2">
-            <h2 className="text-xl font-semibold">{test.title}</h2>
-            <h3 className="text-xl font-semibold">{test.language}</h3>
-          </div>
-          <p className="text-sm whitespace-pre-line">{test.question}</p>
-        </article>
-      )}
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        form.handleSubmit();
+      }}>
+      <h2 className="text-2xl font-semibold">Generate a Test</h2>
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          form.handleSubmit();
-        }}
-        className="w-full max-w-md !space-y-4 bg-background p-8 rounded-xl shadow-lg border border-border">
-        <h1 className="text-2xl font-semibold text-center">Generate a Test</h1>
+      <form.Field name="prompt">
+        {(field) => (
+          <div className="relative flex flex-col gap-1">
+            <Label htmlFor={field.name}>
+              Prompt<sup>*</sup>
+            </Label>
 
-        <form.Field name="prompt">
-          {(field) => (
-            <div className="flex flex-col gap-1">
-              <Label htmlFor={field.name}>
-                Prompt<sup>*</sup>
-              </Label>
+            <div className="relative">
               <Textarea
                 id={field.name}
                 name={field.name}
                 rows={5}
-                placeholder="Describe what kind of coding test to generate..."
+                placeholder="Describe the coding test to generate..."
                 value={field.state.value}
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
-                className="p-4"
+                className="p-4 pr-24 pb-14 w-full resize-none"
               />
-              <FieldInfo field={field} />
+
+              <ul className="absolute top-2 right-3 flex gap-1">
+                {testDifficulties.map((level) => (
+                  <li key={level}>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      onClick={() => setDifficulty(level)}
+                      className="p-0 bg-transparent border-0">
+                      <StarIcon
+                        weight={level <= difficulty ? "fill" : "regular"}
+                        className={cn(
+                          level <= difficulty
+                            ? "fill-primary text-primary"
+                            : "text-foreground",
+                          "size-5 cursor-pointer transition hover:fill-primary hover:text-primary"
+                        )}
+                      />
+                    </Button>
+                  </li>
+                ))}
+              </ul>
+
+              <form.Subscribe
+                selector={({ isSubmitting, isValid, isDirty }) => [
+                  isSubmitting,
+                  isDirty,
+                  isValid,
+                ]}>
+                {([isSubmitting, isValid, isDirty]) =>
+                  isDirty &&
+                  isValid && (
+                    <Button
+                      type="submit"
+                      size="sm"
+                      disabled={isSubmitting}
+                      className="absolute bottom-3 right-3 shadow-md">
+                      {isSubmitting ? "..." : "Generate"}
+                    </Button>
+                  )
+                }
+              </form.Subscribe>
             </div>
-          )}
-        </form.Field>
 
-        <div className="flex flex-col gap-1">
-          <Label>Difficulty</Label>
-          <ul className="flex justify-center gap-1">
-            {[1, 2, 3].map((level) => (
-              <li key={level}>
-                <Button onClick={() => setDifficulty(level)} variant="ghost">
-                  <StarIcon
-                    weight={level <= difficulty ? "fill" : "regular"}
-                    className={cn(
-                      level <= difficulty
-                        ? "fill-primary text-primary"
-                        : "text-foreground",
-                      "size-6 cursor-pointer transition"
-                    )}
-                  />
-                </Button>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <form.Subscribe selector={(s) => [s.canSubmit, s.isSubmitting]}>
-          {([canSubmit, isSubmitting]) => (
-            <Button type="submit" disabled={!canSubmit}>
-              {isSubmitting ? "Generating..." : "Generate Test"}
-            </Button>
-          )}
-        </form.Subscribe>
-      </form>
-    </main>
+            <FieldInfo field={field} />
+          </div>
+        )}
+      </form.Field>
+    </form>
   );
 }
