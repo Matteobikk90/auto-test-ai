@@ -10,7 +10,7 @@ export function UserLink() {
   return (
     <Link
       href={href}
-      className="flex items-center gap-2 border rounded-md p-1.5">
+      className="flex items-center gap-2 border rounded-md p-2 size-9">
       {session ? (
         <UserIcon weight="duotone" className="size-5" />
       ) : (

@@ -71,6 +71,7 @@ export default function GenerateTest() {
                 value={field.state.value}
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
+                className="p-4"
               />
               <FieldInfo field={field} />
             </div>
@@ -79,21 +80,23 @@ export default function GenerateTest() {
 
         <div className="flex flex-col gap-1">
           <Label>Difficulty</Label>
-          <div className="flex justify-center gap-1">
+          <ul className="flex justify-center gap-1">
             {[1, 2, 3].map((level) => (
-              <StarIcon
-                key={level}
-                onClick={() => setDifficulty(level)}
-                weight={level <= difficulty ? "fill" : "regular"}
-                className={cn(
-                  level <= difficulty
-                    ? "fill-primary text-primary"
-                    : "text-foreground",
-                  "size-6 cursor-pointer transition"
-                )}
-              />
+              <li key={level}>
+                <Button onClick={() => setDifficulty(level)} variant="ghost">
+                  <StarIcon
+                    weight={level <= difficulty ? "fill" : "regular"}
+                    className={cn(
+                      level <= difficulty
+                        ? "fill-primary text-primary"
+                        : "text-foreground",
+                      "size-6 cursor-pointer transition"
+                    )}
+                  />
+                </Button>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
 
         <form.Subscribe selector={(s) => [s.canSubmit, s.isSubmitting]}>

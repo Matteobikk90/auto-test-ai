@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "tailwindcss/preflight";
 
 @theme inline {
   --color-background: var(--background);
@@ -14,9 +13,9 @@
   --background: #ffffff;
   --foreground: #000b27;
 
-  --primary: #5256be; /* blue-100 */
-  --secondary: #4fa77e; /* green-100 */
-  --accent: #ff8649; /* orange-100 */
+  --primary: #5256be;
+  --secondary: #4fa77e;
+  --accent: #ff8649;
 }
 
 [data-font="retro"] {
@@ -30,9 +29,9 @@
   --background: #000b27;
   --foreground: #ffffff;
 
-  --primary: #eeeef8; /* blue-10 */
-  --secondary: #eef6f2; /* green-10 */
-  --accent: #fef8ee; /* orange-10 */
+  --primary: #eeeef8;
+  --secondary: #eef6f2;
+  --accent: #fef8ee;
 }
 
 html,
@@ -48,6 +47,7 @@ body {
   );
 }
 
+header,
 main {
   @apply container m-auto flex flex-col flex-1 gap-4 p-4;
 }

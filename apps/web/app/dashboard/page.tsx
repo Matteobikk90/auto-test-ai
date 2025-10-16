@@ -19,7 +19,7 @@ export default async function Dashboard() {
   });
 
   return (
-    <main className="p-6 space-y-6">
+    <main>
       <h1 className="text-2xl font-semibold">Welcome to your dashboard</h1>
       <p className="text-foreground">Your generated tests:</p>
 

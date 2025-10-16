@@ -19,7 +19,7 @@ export default function SessionProviderWrapper({
       <QueryClientProvider client={queryClient}>
         <ThemeProvider>
           <Header />
-          <main>{children}</main>
+          <>{children}</>
           <Toaster position="bottom-right" richColors closeButton />
         </ThemeProvider>
       </QueryClientProvider>

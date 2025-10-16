@@ -11,7 +11,7 @@ import { useShallow } from "zustand/shallow";
 export default function ThemeToggleButton() {
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const { font, toggleFont } = useStore(
+  const { toggleFont } = useStore(
     useShallow(({ font, toggleFont }) => ({ font, toggleFont }))
   );
 
@@ -20,7 +20,6 @@ export default function ThemeToggleButton() {
   if (!mounted) return null;
 
   const isDark = resolvedTheme === "dark";
-  const isRetro = font === "retro";
 
   return (
     <div className="flex items-center gap-2">
