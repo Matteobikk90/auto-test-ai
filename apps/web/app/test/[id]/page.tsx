@@ -1,5 +1,6 @@
 "use client";
 
+import CodeEditor from "@/components/code-editor";
 import { queryClient } from "@/config/queryClient";
 import { getTests } from "@/queries/tests";
 import { useQuery } from "@tanstack/react-query";
@@ -27,6 +28,7 @@ export default function TestDetail() {
         <h3 className="text-xs uppercase">{`{ ${test.language} }`}</h3>
       </div>
       <p className="whitespace-pre-line">{test.question}</p>
+      <CodeEditor />
     </article>
   );
 }
