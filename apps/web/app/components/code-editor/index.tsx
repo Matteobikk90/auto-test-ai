@@ -1,36 +1,30 @@
 "use client";
 
 import Editor from "@monaco-editor/react";
-import { Button } from "@repo/ui/components/shadcn/button";
-import { useState } from "react";
 
 export default function CodeEditor({
-  onSubmit,
+  value,
+  onChange,
 }: {
-  onSubmit: (code: string) => void;
+  value: string;
+  onChange: (value: string) => void;
 }) {
-  const [code, setCode] = useState("// Write your solution here");
-
   return (
-    <section className="mt-8 w-full max-w-3xl mx-auto space-y-4">
+    <div className="mt-6 w-full max-w-3xl mx-auto rounded-lg border border-border shadow-md overflow-hidden">
       <Editor
-        height="300px"
+        height="320px"
         defaultLanguage="javascript"
         theme="vs-dark"
-        value={code}
-        onChange={(value) => setCode(value || "")}
+        value={value}
+        onChange={(val) => onChange(val || "")}
         options={{
           minimap: { enabled: false },
           fontSize: 14,
           padding: { top: 12 },
           automaticLayout: true,
+          scrollBeyondLastLine: false,
         }}
-        className="rounded-lg border border-border shadow-md overflow-hidden"
       />
-
-      <Button onClick={() => onSubmit(code)} className="w-full">
-        Submit Solution
-      </Button>
-    </section>
+    </div>
   );
 }

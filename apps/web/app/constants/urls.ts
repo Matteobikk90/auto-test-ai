@@ -4,5 +4,5 @@ export const proxyTarget =
 export const URL_ENDPOINTS = {
   auth: { register: "/api/auth/register" },
   generateTest: "/api/generate-test",
-  getTests: "/api/tests",
+  tests: { getAll: "/api/tests", submit: "/api/validate-test" },
 };
