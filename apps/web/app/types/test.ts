@@ -5,4 +5,15 @@ export type TestType = {
   solution?: string;
   prompt: string;
   language: string;
+  submissions?: SubmissionType[];
+};
+
+export type SubmissionType = {
+  id: number;
+  code: string;
+  feedback?: string;
+  passed?: boolean;
+  createdAt: string;
+  userId: string;
+  testId: number;
 };

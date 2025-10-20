@@ -8,9 +8,19 @@ export async function GET() {
   if (!session?.user?.email)
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
+  const user = await prisma.user.findUnique({
+    where: { email: session.user.email },
+  });
+
   const tests = await prisma.test.findMany({
-    where: { user: { email: session.user.email } },
-    orderBy: { createdAt: "desc" },
+    where: { userId: user!.id },
+    include: {
+      submissions: {
+        where: { userId: user!.id },
+        orderBy: { createdAt: "desc" },
+        take: 1,
+      },
+    },
   });
 
   return NextResponse.json(tests);
