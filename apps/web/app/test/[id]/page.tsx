@@ -4,14 +4,24 @@ import CodeEditor from "@/components/code-editor";
 import { queryClient } from "@/config/queryClient";
 import { getTests, submitTest } from "@/queries/tests";
 import { Button } from "@repo/ui/components/shadcn/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@repo/ui/components/shadcn/dialog";
 import { toast } from "@repo/ui/components/shadcn/sonner";
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { signOut } from "next-auth/react";
 import { useParams } from "next/navigation";
+import { useState } from "react";
 
 export default function TestDetail() {
   const { id } = useParams();
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   const { data: tests, isLoading } = useQuery({
     queryKey: ["tests"],
@@ -26,17 +36,13 @@ export default function TestDetail() {
     mutationFn: submitTest,
     onSuccess: (data) => {
       if (data?.blocked) {
-        toast.error("🚫 Account locked", {
-          description: data?.feedback,
-        });
+        toast.error("🚫 Account locked", { description: data?.feedback });
         signOut();
         return;
       }
 
       if (data?.warning) {
-        toast.warning("⚠️ Warning issued", {
-          description: data?.feedback,
-        });
+        toast.warning("⚠️ Warning issued", { description: data?.feedback });
         return;
       }
 
@@ -73,7 +79,7 @@ export default function TestDetail() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          if (!latestSubmission?.passed) form.handleSubmit();
+          if (!latestSubmission?.passed) setConfirmOpen(true);
         }}
         className="space-y-4">
         <form.Field name="code">
@@ -87,12 +93,13 @@ export default function TestDetail() {
         </form.Field>
 
         {!latestSubmission?.passed && (
-          <form.Subscribe selector={(s) => [s.canSubmit, s.isSubmitting]}>
-            {([canSubmit, isSubmitting]) => (
+          <form.Subscribe
+            selector={(s) => [s.canSubmit, s.isSubmitting, s.isDirty]}>
+            {([canSubmit, isSubmitting, isDirty]) => (
               <Button
                 type="submit"
                 className="w-full"
-                disabled={!canSubmit || isSubmitting}>
+                disabled={!canSubmit || isSubmitting || !isDirty}>
                 {isSubmitting ? "Evaluating..." : "Submit Solution"}
               </Button>
             )}
@@ -105,6 +112,31 @@ export default function TestDetail() {
           </p>
         )}
       </form>
+
+      {/* Confirmation dialog */}
+      <Dialog open={confirmOpen} onOpenChange={setConfirmOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Confirm submission</DialogTitle>
+            <DialogDescription>
+              Submitting incomplete or meaningless code may result in a warning
+              or account suspension. Are you sure you want to proceed?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="mt-4">
+            <Button variant="ghost" onClick={() => setConfirmOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              onClick={async () => {
+                setConfirmOpen(false);
+                await form.handleSubmit();
+              }}>
+              Confirm & Submit
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </article>
   );
 }
