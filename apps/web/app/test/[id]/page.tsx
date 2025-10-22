@@ -3,25 +3,17 @@
 import CodeEditor from "@/components/code-editor";
 import { queryClient } from "@/config/queryClient";
 import { getTests, submitTest } from "@/queries/tests";
+import { useStore } from "@/store";
 import { Button } from "@repo/ui/components/shadcn/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@repo/ui/components/shadcn/dialog";
 import { toast } from "@repo/ui/components/shadcn/sonner";
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { signOut } from "next-auth/react";
 import { useParams } from "next/navigation";
-import { useState } from "react";
 
 export default function TestDetail() {
   const { id } = useParams();
-  const [confirmOpen, setConfirmOpen] = useState(false);
+  const setModal = useStore(({ setModal }) => setModal);
 
   const { data: tests, isLoading } = useQuery({
     queryKey: ["tests"],
@@ -58,7 +50,10 @@ export default function TestDetail() {
     },
     onSubmit: async ({ value }) => {
       if (!test) return;
-      await mutateAsync({ testId: test.id, code: value.code });
+
+      setModal("Confirm", async () => {
+        await mutateAsync({ testId: test.id, code: value.code });
+      });
     },
   });
 
@@ -79,7 +74,7 @@ export default function TestDetail() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          if (!latestSubmission?.passed) setConfirmOpen(true);
+          if (!latestSubmission?.passed) form.handleSubmit();
         }}
         className="space-y-4">
         <form.Field name="code">
@@ -112,31 +107,6 @@ export default function TestDetail() {
           </p>
         )}
       </form>
-
-      {/* Confirmation dialog */}
-      <Dialog open={confirmOpen} onOpenChange={setConfirmOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Confirm submission</DialogTitle>
-            <DialogDescription>
-              Submitting incomplete or meaningless code may result in a warning
-              or account suspension. Are you sure you want to proceed?
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter className="mt-4">
-            <Button variant="ghost" onClick={() => setConfirmOpen(false)}>
-              Cancel
-            </Button>
-            <Button
-              onClick={async () => {
-                setConfirmOpen(false);
-                await form.handleSubmit();
-              }}>
-              Confirm & Submit
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </article>
   );
 }

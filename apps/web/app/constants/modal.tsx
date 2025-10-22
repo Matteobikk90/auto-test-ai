@@ -1,0 +1,36 @@
+import { Button } from "@repo/ui/components/shadcn/button";
+
+export const MODAL_TEMPLATES = {
+  Info: {
+    title: "Information",
+    description: "This is just an informational message.",
+    footer: (close: () => void) => <Button onClick={close}>Close</Button>,
+  },
+  Warning: {
+    title: "Warning",
+    description: "This action may have consequences.",
+    footer: (close: () => void) => (
+      <>
+        <Button variant="ghost" onClick={close}>
+          Cancel
+        </Button>
+        <Button variant="destructive" onClick={close}>
+          Understood
+        </Button>
+      </>
+    ),
+  },
+  Confirm: {
+    title: "Please confirm",
+    description:
+      "Submitting meaningless or spam code may lead to a warning or suspension. Proceed?",
+    footer: (close: () => void, onConfirm?: () => Promise<void>) => (
+      <>
+        <Button variant="ghost" onClick={close}>
+          Cancel
+        </Button>
+        <Button onClick={onConfirm}>Confirm</Button>
+      </>
+    ),
+  },
+};
