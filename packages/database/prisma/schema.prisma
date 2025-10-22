@@ -30,6 +30,7 @@ model User {
   bio           String?
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
+  warnings      Int          @default(0)
   Test          Test[]
   Submission    Submission[]
 

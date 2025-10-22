@@ -2,9 +2,15 @@
 
 import { UserLink } from "@/components/user";
 import { useStore } from "@/store";
-import { MoonIcon, SunIcon, TextAaIcon } from "@phosphor-icons/react";
+import {
+  BookOpenTextIcon,
+  MoonIcon,
+  SunIcon,
+  TextAaIcon,
+} from "@phosphor-icons/react";
 import { Button } from "@repo/ui/components/shadcn/button";
 import { useTheme } from "next-themes";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useShallow } from "zustand/shallow";
 
@@ -23,6 +29,11 @@ export default function ThemeToggleButton() {
 
   return (
     <div className="flex items-center gap-2">
+      <Link
+        href="/dashboard"
+        className="flex items-center gap-2 border rounded-md p-2 size-9">
+        <BookOpenTextIcon weight="duotone" className="size-5" />
+      </Link>
       <Button
         size="icon"
         variant="outline"

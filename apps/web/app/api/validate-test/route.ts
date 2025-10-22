@@ -11,11 +11,13 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const { testId, code } = await req.json();
-
   if (!testId || !code)
     return NextResponse.json({ error: "Missing data" }, { status: 400 });
 
-  const test = await prisma.test.findUnique({ where: { id: testId } });
+  const test = await prisma.test.findUnique({
+    where: { id: testId },
+    include: { user: true },
+  });
   if (!test)
     return NextResponse.json({ error: "Test not found" }, { status: 404 });
 
@@ -40,10 +42,34 @@ export async function POST(req: Request) {
   const user = await prisma.user.findUnique({
     where: { email: session.user.email },
   });
+  if (!user)
+    return NextResponse.json({ error: "User not found" }, { status: 404 });
+
+  if (result.isSpam) {
+    const updated = await prisma.user.update({
+      where: { id: user.id },
+      data: { warnings: { increment: 1 } },
+    });
+
+    if (updated.warnings >= 2) {
+      return NextResponse.json({
+        blocked: true,
+        feedback:
+          "Your account has been locked for repeated invalid submissions.",
+      });
+    }
+
+    return NextResponse.json({
+      warning: true,
+      warnings: updated.warnings,
+      feedback: result.feedback || "Low-quality or spam submission detected.",
+    });
+  }
+
   const submission = await prisma.submission.create({
     data: {
       testId,
-      userId: user!.id,
+      userId: user.id,
       code,
       passed: result.passed,
       feedback: result.feedback,

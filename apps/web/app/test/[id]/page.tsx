@@ -7,6 +7,7 @@ import { Button } from "@repo/ui/components/shadcn/button";
 import { toast } from "@repo/ui/components/shadcn/sonner";
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { signOut } from "next-auth/react";
 import { useParams } from "next/navigation";
 
 export default function TestDetail() {
@@ -24,17 +25,24 @@ export default function TestDetail() {
   const { mutateAsync } = useMutation({
     mutationFn: submitTest,
     onSuccess: (data) => {
-      if (data?.passed) {
-        toast.success("✅ Test passed! Locked for editing.", {
-          description: data.feedback,
+      if (data?.blocked) {
+        toast.error("🚫 Account locked", {
+          description: data?.feedback,
         });
-      } else {
-        toast.error("❌ Test failed", { description: data?.feedback });
+        signOut();
+        return;
       }
-    },
-    onError: (err) => {
-      const msg = err instanceof Error ? err.message : String(err);
-      toast.error("Validation failed", { description: msg });
+
+      if (data?.warning) {
+        toast.warning("⚠️ Warning issued", {
+          description: data?.feedback,
+        });
+        return;
+      }
+
+      toast.success(data?.passed ? "✅ Test passed!" : "❌ Test failed", {
+        description: data?.feedback,
+      });
     },
   });
 

@@ -17,3 +17,11 @@ export type SubmissionType = {
   userId: string;
   testId: number;
 };
+
+export type SubmitTestReqType = {
+  passed: boolean;
+  feedback: string;
+  blocked: boolean;
+  warning: boolean;
+};
+export type SubmitTestResType = { testId: number; code: string };

@@ -16,11 +16,18 @@ export const OPENAI_TASKS = {
   validateSubmission: {
     model: "gpt-5-nano",
     system: `
-      You are a code evaluator. Compare the user's submitted code with the reference solution. 
-      Accept both CommonJS (module.exports) and ES module (export default) styles as valid. 
-      Return only valid JSON in the format:
-      { "passed": boolean, "feedback": string }.
-      Be concise and objective in feedback.
+      You are a strict but fair code evaluator.
+
+      Compare the user's submitted code with the reference solution and decide if it solves the task.
+      Accept both CommonJS (module.exports) and ES module (export default) styles as valid.
+
+      Also detect spammy or nonsensical submissions (e.g. empty, unrelated, random text, or placeholder comments).
+      Return a JSON object with exactly:
+      { "passed": boolean, "feedback": string, "isSpam": boolean }
+
+      - "passed" = true only if the code correctly solves the task.
+      - "isSpam" = true only if the code is meaningless or clearly not an attempt.
+      Keep feedback concise and technical.
     `,
   },
 } as const;
