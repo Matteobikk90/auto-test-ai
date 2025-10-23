@@ -3,9 +3,9 @@ import type { StateCreator } from "zustand";
 
 const createModalSlice: StateCreator<ModalSliceType> = (set) => ({
   type: "",
-  payload: undefined,
-  setModal: (type, payload) => set({ type, payload }),
-  closeModal: () => set({ type: "", payload: undefined }),
+  callback: undefined,
+  setModal: (type, callback) => set({ type, callback }),
+  closeModal: () => set({ type: "", callback: undefined }),
 });
 
 export default createModalSlice;

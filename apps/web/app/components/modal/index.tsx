@@ -3,6 +3,7 @@ import { useStore } from "@/store";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -23,6 +24,9 @@ export function GlobalModal() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
+          <DialogDescription className="sr-only">
+            Confirmation modal
+          </DialogDescription>
         </DialogHeader>
         <p>{description}</p>
         <DialogFooter>{footer(closeModal)}</DialogFooter>

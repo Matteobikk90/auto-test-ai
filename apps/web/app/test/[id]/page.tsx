@@ -51,9 +51,9 @@ export default function TestDetail() {
     onSubmit: async ({ value }) => {
       if (!test) return;
 
-      setModal("Confirm", async () => {
-        await mutateAsync({ testId: test.id, code: value.code });
-      });
+      setModal("Confirm", () =>
+        mutateAsync({ testId: test.id, code: value.code })
+      );
     },
   });
 

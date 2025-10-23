@@ -24,12 +24,18 @@ export const MODAL_TEMPLATES = {
     title: "Please confirm",
     description:
       "Submitting meaningless or spam code may lead to a warning or suspension. Proceed?",
-    footer: (close: () => void, onConfirm?: () => Promise<void>) => (
+    footer: (close: () => void, onConfirm?: () => Promise<void> | void) => (
       <>
         <Button variant="ghost" onClick={close}>
           Cancel
         </Button>
-        <Button onClick={onConfirm}>Confirm</Button>
+        <Button
+          onClick={async () => {
+            if (onConfirm) await onConfirm();
+            close();
+          }}>
+          Confirm
+        </Button>
       </>
     ),
   },

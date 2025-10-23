@@ -11,7 +11,6 @@ export default function CodeEditor({
   onChange: (value: string) => void;
   readOnly: boolean | undefined;
 }) {
-  console.log(readOnly);
   return (
     <div className="mt-6 w-full max-w-3xl mx-auto rounded-lg border border-border shadow-md overflow-hidden">
       <Editor
