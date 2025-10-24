@@ -1,5 +1,6 @@
 "use client";
 
+import { queryClient } from "@/config/queryClient";
 import { testDifficulties } from "@/constants/tests";
 import { generateTest } from "@/queries/generate-test";
 import { FieldInfo } from "@/utils/form";
@@ -22,6 +23,7 @@ export default function GenerateTest() {
     onSuccess: () => {
       toast.success("Test created successfully");
       form.reset();
+      queryClient.invalidateQueries({ queryKey: ["tests"] });
     },
     onError: (err) => {
       const msg = err instanceof Error ? err.message : String(err);

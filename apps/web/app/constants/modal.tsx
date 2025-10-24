@@ -31,8 +31,8 @@ export const MODAL_TEMPLATES = {
         </Button>
         <Button
           onClick={async () => {
-            if (onConfirm) await onConfirm();
             close();
+            if (onConfirm) await onConfirm();
           }}>
           Confirm
         </Button>

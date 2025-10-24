@@ -11,8 +11,12 @@ import {
 import { useShallow } from "zustand/shallow";
 
 export function GlobalModal() {
-  const { type, closeModal } = useStore(
-    useShallow(({ type, closeModal }) => ({ type, closeModal }))
+  const { type, closeModal, callback } = useStore(
+    useShallow(({ type, closeModal, callback }) => ({
+      type,
+      closeModal,
+      callback,
+    }))
   );
 
   if (!type) return null;
@@ -29,7 +33,7 @@ export function GlobalModal() {
           </DialogDescription>
         </DialogHeader>
         <p>{description}</p>
-        <DialogFooter>{footer(closeModal)}</DialogFooter>
+        <DialogFooter>{footer(closeModal, callback)}</DialogFooter>
       </DialogContent>
     </Dialog>
   );
