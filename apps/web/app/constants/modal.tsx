@@ -2,9 +2,14 @@ import { Button } from "@repo/ui/components/shadcn/button";
 
 export const MODAL_TEMPLATES = {
   Info: {
-    title: "Information",
-    description: "This is just an informational message.",
-    footer: (close: () => void) => <Button onClick={close}>Close</Button>,
+    title: "Account Policy",
+    description:
+      "Generating or submitting meaningless or repetitive code will trigger warnings. After two warnings, your account will be locked automatically.",
+    footer: (close: () => void) => (
+      <Button onClick={close} className="w-full">
+        I Understand
+      </Button>
+    ),
   },
   Warning: {
     title: "Warning",

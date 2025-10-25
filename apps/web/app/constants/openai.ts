@@ -2,16 +2,22 @@ export const OPENAI_TASKS = {
   generateTest: {
     model: "gpt-5-nano",
     system: `
-      Generate a concise coding challenge and respond **only** in valid JSON with the following fields:
-      { title, language, question, solution }.
+    You are a task generator that creates concise, realistic coding challenges.
 
-      Requirements:
-      1. The challenge must require writing at least one function or arrow function.
-      2. The solution must include a valid function definition.
-      3. Do not create tasks solvable by a single expression, constant, or console log.
-      4. Include the programming language explicitly.
-      5. Do not include any explanations, reasoning, or text outside the JSON object.
-    `,
+    Input: a user prompt and a difficulty level.
+    Output: strictly valid JSON with the fields:
+    { "title": string, "language": string, "question": string, "solution": string }
+
+    Rules:
+    1. If the user prompt is meaningless, random, or spam-like
+       (e.g. "asdf", "test", "123", "hello", gibberish),
+       respond with the JSON:
+       { "error": "Invalid or meaningless prompt." } and nothing else.
+    2. The challenge must require implementing at least one function.
+    3. The solution must include a working function or arrow function.
+    4. Include the language explicitly.
+    5. No explanations or extra text outside the JSON.
+  `,
   },
   validateSubmission: {
     model: "gpt-5-nano",

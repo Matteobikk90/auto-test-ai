@@ -29,9 +29,9 @@
   --background: #000b27;
   --foreground: #ffffff;
 
-  --primary: #eeeef8;
-  --secondary: #eef6f2;
-  --accent: #fef8ee;
+  --primary: #c9cae5;
+  --secondary: #cfe6da;
+  --accent: #f8e0c5;
 }
 
 html,
@@ -57,5 +57,5 @@ aside {
 }
 
 form {
-  @apply bg-background/20 text-foreground border-foreground m-auto max-w-3xl w-full space-y-4 rounded-md border p-4 shadow-xl;
+  @apply bg-background/20 text-foreground border-foreground m-auto max-w-2xl w-full space-y-4 rounded-md border p-4 shadow-xl;
 }

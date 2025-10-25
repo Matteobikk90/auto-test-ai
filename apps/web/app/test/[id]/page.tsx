@@ -63,10 +63,12 @@ export default function TestDetail() {
   if (!test) return <h2 className="p-4">Test not found.</h2>;
 
   return (
-    <article className="p-4 max-w-3xl space-y-6 mx-auto">
+    <article className="p-4 space-y-6">
       <header className="flex justify-between items-center">
         <h2 className="text-2xl font-semibold">{test.title}</h2>
-        <h3 className="text-xs uppercase">{`{ ${test.language} }`}</h3>
+        <div>
+          <h3 className="text-xs uppercase">{`{ ${test.language} }`}</h3>
+        </div>
       </header>
 
       <p className="whitespace-pre-line text-sm text-foreground/90">

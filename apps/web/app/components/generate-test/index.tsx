@@ -7,6 +7,7 @@ import { useStore } from "@/store";
 import { FieldInfo } from "@/utils/form";
 import { generateSchema } from "@/validations/generate-test";
 import { StarIcon } from "@phosphor-icons/react";
+import { InfoIcon } from "@phosphor-icons/react/dist/ssr";
 import { Button } from "@repo/ui/components/shadcn/button";
 import { Label } from "@repo/ui/components/shadcn/label";
 import { toast } from "@repo/ui/components/shadcn/sonner";
@@ -14,22 +15,30 @@ import { Textarea } from "@repo/ui/components/shadcn/textarea";
 import { cn } from "@repo/ui/lib/utils";
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
+import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useShallow } from "zustand/shallow";
 
 export default function GenerateTest() {
+  const router = useRouter();
   const [difficulty, setDifficulty] = useState(2);
-  const { setModal, closeModal, callback } = useStore(
-    useShallow(({ setModal, closeModal, callback }) => ({
-      setModal,
-      closeModal,
-      callback,
-    }))
-  );
+  const setModal = useStore(({ setModal }) => setModal);
 
-  const { mutateAsync } = useMutation({
+  const { mutateAsync, isPending } = useMutation({
     mutationFn: generateTest,
-    onSuccess: () => {
+    onSuccess: async (data) => {
+      if (data?.blocked) {
+        toast.error("🚫 Account locked", { description: data?.feedback });
+        const res = await signOut({ redirect: false, callbackUrl: "/" });
+        return router.push(res.url);
+      }
+
+      if (data?.warning) {
+        return toast.warning("⚠️ Warning issued", {
+          description: data?.feedback,
+        });
+      }
+
       toast.success("Test created successfully");
       form.reset();
       queryClient.invalidateQueries({ queryKey: ["tests"] });
@@ -55,11 +64,20 @@ export default function GenerateTest() {
         e.preventDefault();
         form.handleSubmit();
       }}>
-      <h2 className="text-2xl font-semibold">Generate a Test</h2>
+      <div className="flex justify-between gap-4">
+        <h2 className="text-2xl font-semibold">Generate a Test</h2>
+        <Button
+          type="button"
+          variant="outline"
+          className="p-[0.25rem] border-yellow-700"
+          onClick={() => setModal("Info")}>
+          <InfoIcon weight="duotone" className="size-5 text-yellow-700" />
+        </Button>
+      </div>
 
       <form.Field name="prompt">
         {(field) => (
-          <div className="relative flex flex-col gap-1">
+          <header className="relative flex flex-col gap-1 space-y-2">
             <Label htmlFor={field.name}>
               Prompt<sup>*</sup>
             </Label>
@@ -99,20 +117,16 @@ export default function GenerateTest() {
               </ul>
 
               <form.Subscribe
-                selector={({ isSubmitting, isValid, isDirty }) => [
-                  isSubmitting,
-                  isDirty,
-                  isValid,
-                ]}>
-                {([isSubmitting, isValid, isDirty]) =>
+                selector={({ isValid, isDirty }) => [isDirty, isValid]}>
+                {([isValid, isDirty]) =>
                   isDirty &&
                   isValid && (
                     <Button
                       type="submit"
                       size="sm"
-                      disabled={isSubmitting}
+                      disabled={isPending}
                       className="absolute bottom-3 right-3 shadow-md">
-                      {isSubmitting ? "..." : "Generate"}
+                      {isPending ? "Generating..." : "Generate"}
                     </Button>
                   )
                 }
@@ -120,7 +134,7 @@ export default function GenerateTest() {
             </div>
 
             <FieldInfo field={field} />
-          </div>
+          </header>
         )}
       </form.Field>
     </form>
