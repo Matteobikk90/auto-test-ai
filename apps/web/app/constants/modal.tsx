@@ -8,13 +8,18 @@ export const MODAL_TEMPLATES = {
   },
   Warning: {
     title: "Warning",
-    description: "This action may have consequences.",
-    footer: (close: () => void) => (
+    description:
+      "Generating vague or repetitive prompts may waste resources and result in warnings. Proceed?",
+    footer: (close: () => void, onConfirm?: () => Promise<void> | void) => (
       <>
         <Button variant="ghost" onClick={close}>
           Cancel
         </Button>
-        <Button variant="destructive" onClick={close}>
+        <Button
+          onClick={async () => {
+            close();
+            if (onConfirm) await onConfirm();
+          }}>
           Understood
         </Button>
       </>

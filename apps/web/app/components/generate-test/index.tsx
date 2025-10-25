@@ -3,6 +3,7 @@
 import { queryClient } from "@/config/queryClient";
 import { testDifficulties } from "@/constants/tests";
 import { generateTest } from "@/queries/generate-test";
+import { useStore } from "@/store";
 import { FieldInfo } from "@/utils/form";
 import { generateSchema } from "@/validations/generate-test";
 import { StarIcon } from "@phosphor-icons/react";
@@ -14,9 +15,17 @@ import { cn } from "@repo/ui/lib/utils";
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
+import { useShallow } from "zustand/shallow";
 
 export default function GenerateTest() {
   const [difficulty, setDifficulty] = useState(2);
+  const { setModal, closeModal, callback } = useStore(
+    useShallow(({ setModal, closeModal, callback }) => ({
+      setModal,
+      closeModal,
+      callback,
+    }))
+  );
 
   const { mutateAsync } = useMutation({
     mutationFn: generateTest,
@@ -34,7 +43,10 @@ export default function GenerateTest() {
   const form = useForm({
     defaultValues: { prompt: "" },
     validators: { onChange: generateSchema },
-    onSubmit: ({ value }) => mutateAsync({ ...value, difficulty }),
+    onSubmit: ({ value }) =>
+      setModal("Warning", () => {
+        mutateAsync({ ...value, difficulty });
+      }),
   });
 
   return (
