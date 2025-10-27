@@ -1,4 +1,4 @@
-import ThemeToggleButton from "@/components/theme-switch";
+import { UserLink } from "@/components/user";
 import { RobotIcon } from "@phosphor-icons/react";
 import Link from "next/link";
 
@@ -13,7 +13,7 @@ export default function Header() {
             <h2>Evaluate your code smartly</h2>
           </div>
         </Link>
-        <ThemeToggleButton />
+        <UserLink />
       </nav>
     </header>
   );

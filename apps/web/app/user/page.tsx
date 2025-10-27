@@ -1,4 +1,5 @@
 import LogoutButton from "@/components/sign-out";
+import ThemeToggleButton from "@/components/theme-switch";
 import { authOptions } from "@/config/auth";
 import { prisma } from "@repo/db";
 import { getServerSession } from "next-auth";
@@ -21,30 +22,33 @@ export default async function UserPage() {
   }
 
   return (
-    <main className="container mx-auto p-6 space-y-6">
-      <h1 className="text-3xl font-semibold">
-        👋 Welcome, {user.name ?? "User"}
-      </h1>
-      <div className="space-y-2">
-        <p>
+    <main className="!grid grid-cols-2">
+      <article className="space-y-2">
+        <h2 className="text-3xl font-semibold">
+          👋 Welcome, {user.name ?? "User"}
+        </h2>
+        <h3>
           <strong>Email:</strong> {user.email}
-        </p>
+        </h3>
         {user.bio && (
           <p>
             <strong>Bio:</strong> {user.bio}
           </p>
         )}
-      </div>
-      {user.image && (
-        <Image
-          src={user.image}
-          alt={user.name ?? "Profile"}
-          width={120}
-          height={120}
-          className="rounded-full border"
-        />
-      )}
-      <LogoutButton />
+        {user.image && (
+          <Image
+            src={user.image}
+            alt={user.name ?? "Profile"}
+            width={120}
+            height={120}
+            className="rounded-full border"
+          />
+        )}
+      </article>
+      <article className="space-y-2 ml-auto flex flex-col">
+        <ThemeToggleButton />
+        <LogoutButton />
+      </article>
     </main>
   );
 }

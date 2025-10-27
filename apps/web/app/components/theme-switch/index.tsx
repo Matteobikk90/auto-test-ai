@@ -1,6 +1,5 @@
 "use client";
 
-import { UserLink } from "@/components/user";
 import { useStore } from "@/store";
 import {
   BookOpenTextIcon,
@@ -53,7 +52,6 @@ export default function ThemeToggleButton() {
         aria-label="toggle-font">
         <TextAaIcon className="size-5" weight={"duotone"} />
       </Button>
-      <UserLink />
     </div>
   );
 }

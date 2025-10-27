@@ -23,16 +23,19 @@ export default function Dashboard() {
           {data?.map(({ id, title, question, language }) => (
             <li
               key={id}
-              className="border p-4 rounded-md shadow-sm max-w-2xl flex flex-col gap-2">
-              <div className="flex justify-between gap-2 items-center">
+              className="border p-4 rounded-md shadow-sm max-w-2xl flex flex-col gap-2 hover:shadow-2xl transition group">
+              <div className="flex justify-between gap-8 items-center">
                 <h3 className="text-xl font-semibold">{title}</h3>
-                <h4 className="text-xs uppercase">{`{ ${language} }`}</h4>
+                <h4 className="text-xs uppercase w-full max-w-max">{`{ ${language} }`}</h4>
               </div>
-              <p className="text-sm text-foreground">{question}</p>
+              <p className="text-sm text-muted-foreground line-clamp-4">
+                {question}
+              </p>
               <Link
                 href={`/test/${id}`}
-                className="text-primary text-sm underline block mt-auto">
-                View details
+                className="text-sm font-medium text-primary underline opacity-0 
+                       group-hover:opacity-100 transition-opacity self-end">
+                View details →
               </Link>
             </li>
           ))}
