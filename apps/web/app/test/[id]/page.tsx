@@ -72,7 +72,7 @@ export default function TestDetail() {
       </header>
 
       <p className="whitespace-pre-line text-sm text-foreground/90">
-        {test.question}
+        {test.question.replace(/\\n/g, "\n").replace(/\\"/g, '"')}
       </p>
 
       <form

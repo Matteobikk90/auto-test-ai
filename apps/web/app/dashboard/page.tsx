@@ -28,7 +28,7 @@ export default function Dashboard() {
                 <h3 className="text-xl font-semibold">{title}</h3>
                 <h4 className="text-xs uppercase w-full max-w-max">{`{ ${language} }`}</h4>
               </div>
-              <p className="text-sm text-muted-foreground line-clamp-4">
+              <p className="text-sm text-muted-foreground line-clamp-4 whitespace-pre-line">
                 {question}
               </p>
               <Link
