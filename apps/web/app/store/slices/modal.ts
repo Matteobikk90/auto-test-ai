@@ -1,4 +1,4 @@
-import type { ModalSliceType } from "@repo/types/src/store/modal";
+import type { ModalSliceType } from "@repo/types/store/modal";
 import type { StateCreator } from "zustand";
 
 const createModalSlice: StateCreator<ModalSliceType> = (set) => ({

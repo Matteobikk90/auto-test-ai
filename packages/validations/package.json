@@ -2,9 +2,8 @@
   "name": "@repo/validations",
   "version": "1.0.0",
   "type": "module",
-  "scripts": {
-    "dev": "tsc --watch",
-    "build": "tsc"
+  "exports": {
+    "./*": "./src/*.ts"
   },
   "dependencies": {
     "zod": "^4.1.12"

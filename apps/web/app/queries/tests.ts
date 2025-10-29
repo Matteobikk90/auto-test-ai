@@ -4,7 +4,7 @@ import type {
   SubmitTestReqType,
   SubmitTestResType,
   TestType,
-} from "@repo/types/src/test";
+} from "@repo/types/test";
 
 export async function getTests() {
   return (await axiosGet<TestType[]>(URL_ENDPOINTS.tests.getAll)) || [];

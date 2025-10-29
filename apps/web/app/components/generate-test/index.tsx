@@ -13,7 +13,7 @@ import { Label } from "@repo/ui/components/shadcn/label";
 import { toast } from "@repo/ui/components/shadcn/sonner";
 import { Textarea } from "@repo/ui/components/shadcn/textarea";
 import { cn } from "@repo/ui/lib/utils";
-import { generateSchema } from "@repo/validations/src/generate-test";
+import { generateSchema } from "@repo/validations/generate-test";
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 import { signOut } from "next-auth/react";

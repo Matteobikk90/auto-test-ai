@@ -1,4 +1,4 @@
-import { type PopUpInfoType } from "@repo/types/src/pop-up";
+import { type PopUpInfoType } from "@repo/types/pop-up";
 import { cn } from "@repo/ui/lib/utils";
 
 const commonClasses =

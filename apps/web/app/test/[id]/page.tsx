@@ -5,6 +5,7 @@ import { queryClient } from "@/config/queryClient";
 import { getTests, submitTest } from "@/queries/tests";
 import { useStore } from "@/store";
 import { Button } from "@repo/ui/components/shadcn/button";
+import { ScrollContainer } from "@repo/ui/components/shadcn/scroll-area";
 import { toast } from "@repo/ui/components/shadcn/sonner";
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -63,53 +64,52 @@ export default function TestDetail() {
   if (!test) return <h2 className="p-4">Test not found.</h2>;
 
   return (
-    <article className="p-4 space-y-6">
-      <header className="flex justify-between items-center">
+    <article className="p-4 space-y-6 flex flex-col flex-1 min-h-0">
+      <header className="flex !flex-row justify-between items-center !px-0 max-h-max">
         <h2 className="text-2xl font-semibold">{test.title}</h2>
-        <div>
-          <h3 className="text-xs uppercase">{`{ ${test.language} }`}</h3>
-        </div>
+        <h3 className="text-xs uppercase">{`{ ${test.language} }`}</h3>
       </header>
+      <ScrollContainer className="flex-1 min-h-0">
+        <p className="whitespace-pre-line text-sm text-foreground/90">
+          {test.question.replace(/\\n/g, "\n").replace(/\\"/g, '"')}
+        </p>
 
-      <p className="whitespace-pre-line text-sm text-foreground/90">
-        {test.question.replace(/\\n/g, "\n").replace(/\\"/g, '"')}
-      </p>
-
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          if (!latestSubmission?.passed) form.handleSubmit();
-        }}
-        className="space-y-4">
-        <form.Field name="code">
-          {(field) => (
-            <CodeEditor
-              value={field.state.value}
-              onChange={field.handleChange}
-              readOnly={latestSubmission?.passed}
-            />
-          )}
-        </form.Field>
-
-        {!latestSubmission?.passed && (
-          <form.Subscribe selector={(s) => [s.canSubmit, s.isDirty]}>
-            {([canSubmit, isDirty]) => (
-              <Button
-                type="submit"
-                className="w-full"
-                disabled={!canSubmit || isPending || !isDirty}>
-                {isPending ? "Evaluating..." : "Submit Solution"}
-              </Button>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (!latestSubmission?.passed) form.handleSubmit();
+          }}
+          className="space-y-4">
+          <form.Field name="code">
+            {(field) => (
+              <CodeEditor
+                value={field.state.value}
+                onChange={field.handleChange}
+                readOnly={latestSubmission?.passed}
+              />
             )}
-          </form.Subscribe>
-        )}
+          </form.Field>
 
-        {latestSubmission?.passed && (
-          <p className="text-green-600 text-center text-sm font-medium">
-            ✅ This test is passed and locked.
-          </p>
-        )}
-      </form>
+          {!latestSubmission?.passed && (
+            <form.Subscribe selector={(s) => [s.canSubmit, s.isDirty]}>
+              {([canSubmit, isDirty]) => (
+                <Button
+                  type="submit"
+                  className="w-full"
+                  disabled={!canSubmit || isPending || !isDirty}>
+                  {isPending ? "Evaluating..." : "Submit Solution"}
+                </Button>
+              )}
+            </form.Subscribe>
+          )}
+
+          {latestSubmission?.passed && (
+            <p className="text-green-600 text-center text-sm font-medium">
+              ✅ This test is passed and locked.
+            </p>
+          )}
+        </form>
+      </ScrollContainer>
     </article>
   );
 }

@@ -1,7 +1,7 @@
 import createAuthSlice from "@/store/slices/auth";
 import createModalSlice from "@/store/slices/modal";
 import createThemeSlice from "@/store/slices/theme";
-import type { StoreState } from "@repo/types/src/store";
+import type { StoreState } from "@repo/types/store";
 import { create } from "zustand";
 import { persist, subscribeWithSelector } from "zustand/middleware";
 

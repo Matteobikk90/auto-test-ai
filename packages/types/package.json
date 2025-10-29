@@ -2,8 +2,10 @@
   "name": "@repo/types",
   "version": "1.0.0",
   "type": "module",
-  "scripts": {
-    "dev": "tsc --watch",
-    "build": "tsc"
+  "exports": {
+    "./*": "./src/*.ts"
+  },
+  "devDependencies": {
+    "@types/react": "19.1.0"
   }
 }
