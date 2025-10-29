@@ -3,12 +3,12 @@
 import ImageUpload from "@/components/image-upload";
 import { register } from "@/queries/register";
 import { FieldInfo } from "@/utils/form";
-import { registerSchema } from "@/validations/register";
 import { Button } from "@repo/ui/components/shadcn/button";
 import { Input } from "@repo/ui/components/shadcn/input";
 import { Label } from "@repo/ui/components/shadcn/label";
 import { toast } from "@repo/ui/components/shadcn/sonner";
 import { Textarea } from "@repo/ui/components/shadcn/textarea";
+import { registerSchema } from "@repo/validations/src/register";
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";

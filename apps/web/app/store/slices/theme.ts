@@ -1,4 +1,4 @@
-import type { ThemeSliceType } from "@/types/store/theme";
+import type { ThemeSliceType } from "@repo/types/src/store/theme";
 import type { StateCreator } from "zustand";
 
 const createThemeSlice: StateCreator<ThemeSliceType> = (set) => ({

@@ -1,10 +1,10 @@
 "use client";
 import { FieldInfo } from "@/utils/form";
-import { signInSchema } from "@/validations/signin";
 import { Button } from "@repo/ui/components/shadcn/button";
 import { Input } from "@repo/ui/components/shadcn/input";
 import { Label } from "@repo/ui/components/shadcn/label";
 import { toast } from "@repo/ui/components/shadcn/sonner";
+import { signInSchema } from "@repo/validations/src/signin";
 import { useForm } from "@tanstack/react-form";
 import { signIn } from "next-auth/react";
 import Link from "next/link";

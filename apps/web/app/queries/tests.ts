@@ -1,10 +1,10 @@
 import { URL_ENDPOINTS } from "@/constants/urls";
+import { axiosGet, axiosPost } from "@/utils/api";
 import type {
   SubmitTestReqType,
   SubmitTestResType,
   TestType,
-} from "@/types/test";
-import { axiosGet, axiosPost } from "@/utils/api";
+} from "@repo/types/src/test";
 
 export async function getTests() {
   return (await axiosGet<TestType[]>(URL_ENDPOINTS.tests.getAll)) || [];
