@@ -1,5 +1,6 @@
 "use client";
 
+import { PopUpInfo } from "@/components/pop-up-info";
 import { queryClient } from "@/config/queryClient";
 import { testDifficulties } from "@/constants/tests";
 import { generateTest } from "@/queries/generate-test";
@@ -66,13 +67,15 @@ export default function GenerateTest() {
       }}>
       <div className="flex justify-between gap-4">
         <h2 className="text-2xl font-semibold">Generate a Test</h2>
-        <Button
-          type="button"
-          variant="outline"
-          className="p-[0.25rem] border-yellow-700"
-          onClick={() => setModal("Info")}>
-          <InfoIcon weight="duotone" className="size-5 text-yellow-700" />
-        </Button>
+        <PopUpInfo hoverText="Warning">
+          <Button
+            type="button"
+            variant="outline"
+            className="!p-2 border-yellow-700"
+            onClick={() => setModal("Info")}>
+            <InfoIcon weight="duotone" className="size-5 text-yellow-700" />
+          </Button>
+        </PopUpInfo>
       </div>
 
       <form.Field name="prompt">

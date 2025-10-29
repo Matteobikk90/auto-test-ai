@@ -6,6 +6,7 @@ import { Button } from "@repo/ui/components/shadcn/button";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { useShallow } from "zustand/shallow";
+import { PopUpInfo } from "../pop-up-info";
 
 export default function ThemeToggleButton() {
   const { resolvedTheme, setTheme } = useTheme();
@@ -22,25 +23,28 @@ export default function ThemeToggleButton() {
 
   return (
     <div className="flex items-center gap-2">
-      <Button
-        size="icon"
-        variant="outline"
-        onClick={() => setTheme(isDark ? "light" : "dark")}
-        aria-label="toggle-theme">
-        {isDark ? (
-          <SunIcon className="size-5" weight="duotone" />
-        ) : (
-          <MoonIcon className="size-5" weight="duotone" />
-        )}
-      </Button>
-
-      <Button
-        size="icon"
-        variant="outline"
-        onClick={toggleFont}
-        aria-label="toggle-font">
-        <TextAaIcon className="size-5" weight={"duotone"} />
-      </Button>
+      <PopUpInfo hoverText="Toggle theme">
+        <Button
+          size="icon"
+          variant="outline"
+          onClick={() => setTheme(isDark ? "light" : "dark")}
+          aria-label="toggle-theme">
+          {isDark ? (
+            <SunIcon className="size-5" weight="duotone" />
+          ) : (
+            <MoonIcon className="size-5" weight="duotone" />
+          )}
+        </Button>
+      </PopUpInfo>
+      <PopUpInfo hoverText="Toggle font" align="left">
+        <Button
+          size="icon"
+          variant="outline"
+          onClick={toggleFont}
+          aria-label="toggle-font">
+          <TextAaIcon className="size-5" weight={"duotone"} />
+        </Button>
+      </PopUpInfo>
     </div>
   );
 }
