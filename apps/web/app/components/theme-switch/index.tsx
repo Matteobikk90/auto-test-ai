@@ -23,7 +23,7 @@ export default function ThemeToggleButton() {
 
   return (
     <div className="flex items-center gap-2">
-      <PopUpInfo hoverText="Toggle theme">
+      <PopUpInfo hoverText="Toggle theme" align="right">
         <Button
           size="icon"
           variant="outline"
@@ -36,7 +36,7 @@ export default function ThemeToggleButton() {
           )}
         </Button>
       </PopUpInfo>
-      <PopUpInfo hoverText="Toggle font" align="left">
+      <PopUpInfo hoverText="Toggle font">
         <Button
           size="icon"
           variant="outline"

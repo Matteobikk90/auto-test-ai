@@ -9,7 +9,7 @@ export function UserLink() {
   const href = session ? "/user" : "/signin";
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 items-center">
       <PopUpInfo hoverText="Dashboard" position="bottom">
         <Link
           href="/dashboard"
