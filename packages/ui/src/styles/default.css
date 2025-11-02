@@ -26,12 +26,12 @@
 }
 
 [data-theme="dark"] {
-  --background: #000b27;
-  --foreground: #ffffff;
+  --background: #00061a;
+  --foreground: #f5f5f5;
 
-  --primary: #c9cae5;
-  --secondary: #cfe6da;
-  --accent: #f8e0c5;
+  --primary: #b3b5d8;
+  --secondary: #bcd2c4;
+  --accent: #eecb9f;
 }
 
 html,
@@ -61,5 +61,5 @@ aside {
 }
 
 form {
-  @apply bg-background/20 text-foreground border-foreground m-auto max-w-2xl w-full space-y-4 rounded-md border p-4 shadow-xl;
+  @apply bg-background/20 text-foreground border-foreground m-auto max-w-2xl w-full space-y-4 rounded-md border p-4 shadow-xl border-dashed;
 }

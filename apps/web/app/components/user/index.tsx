@@ -13,14 +13,14 @@ export function UserLink() {
       <PopUpInfo hoverText="Dashboard" position="bottom">
         <Link
           href="/dashboard"
-          className="flex items-center gap-2 border rounded-md p-2 size-9">
+          className="flex items-center gap-2 border border-dashed rounded-md p-2 size-9">
           <BookOpenTextIcon weight="duotone" className="size-5" />
         </Link>
       </PopUpInfo>
 
       <Link
         href={href}
-        className="flex items-center gap-2 border rounded-md p-2 size-9">
+        className="flex items-center gap-2 border border-dashed rounded-md p-2 size-9">
         {session ? (
           <PopUpInfo hoverText="User" position="bottom">
             <UserIcon weight="duotone" className="size-5" />

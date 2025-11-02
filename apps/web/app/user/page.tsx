@@ -32,9 +32,9 @@ export default async function UserPage() {
 
   return (
     <section className="flex-1 min-h-0 flex flex-col">
-      <article className="bg-background rounded-md shadow-lg w-full max-w-2xl border border-primary mx-auto flex flex-col min-h-0">
-        <header className="bg-secondary min-h-20 md:min-h-28 relative max-h-max">
-          <div className="absolute inset-x-0 w-30 h-30 -bottom-15 md:-bottom-20 flex justify-center md:w-40 md:h-40 bg-background rounded-full border-4 border-background shadow-md left-1/2 -translate-x-1/2 transition-all">
+      <article className="bg-background rounded-md shadow-lg w-full max-w-2xl border border-primary border-dashed m-auto grid grid-rows-[6rem_auto_auto] min-h-0">
+        <header className="bg-secondary relative h-full">
+          <div className="absolute inset-x-0 w-35 h-35 -bottom-17 md:-bottom-20 flex justify-center md:w-40 md:h-40 bg-background rounded-full border-4 border-background shadow-md left-1/2 -translate-x-1/2 transition-all">
             {user.image ? (
               <Image
                 src={user.image}
@@ -56,7 +56,7 @@ export default async function UserPage() {
         </h2>
 
         <ScrollContainer className="flex-1 min-h-0">
-          <div className="space-y-3 text-sm p-4">
+          <div className="text-sm p-4">
             <InfoRow label="Name" value={user.name ?? "—"} />
             <InfoRow label="Email" value={user.email ?? "-"} />
 
@@ -74,7 +74,7 @@ export default async function UserPage() {
               value={new Date(user.createdAt).toLocaleDateString()}
             />
           </div>
-          <div className="flex justify-between items-center p-4 border-t border-primary">
+          <div className="flex justify-between items-center p-4 border-t border-primary border-dashed">
             <ThemeToggleButton />
             <LogoutButton />
           </div>

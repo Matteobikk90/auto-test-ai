@@ -79,7 +79,7 @@ export default function TestDetail() {
             e.preventDefault();
             if (!latestSubmission?.passed) form.handleSubmit();
           }}
-          className="space-y-4">
+          className="space-y-4 border-dashed">
           <form.Field name="code">
             {(field) => (
               <CodeEditor

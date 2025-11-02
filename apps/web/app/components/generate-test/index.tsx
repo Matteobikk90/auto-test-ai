@@ -71,7 +71,7 @@ export default function GenerateTest() {
           <Button
             type="button"
             variant="outline"
-            className="!p-2 border-yellow-700"
+            className="!p-2 border-yellow-700 border-dashed"
             onClick={() => setModal("Info")}>
             <InfoIcon weight="duotone" className="size-5 text-yellow-700" />
           </Button>

@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Header() {
   return (
-    <header className="w-full border-b border-border/20 backdrop-blur-md max-h-max">
+    <header className="w-full border-b border-border/20 border-dashed backdrop-blur-md max-h-max">
       <nav className="flex justify-between md:grid grid-cols-2 md:place-items-center">
         <Link href="/" className="flex items-center gap-4">
           <RobotIcon weight="duotone" className="size-6 text-primary" />

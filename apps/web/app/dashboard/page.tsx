@@ -23,7 +23,7 @@ export default function Dashboard() {
           {data?.map(({ id, title, question, language }) => (
             <li
               key={id}
-              className="border p-4 rounded-md shadow-sm max-w-2xl flex flex-col gap-2 hover:shadow-2xl transition group">
+              className="border border-dashed p-4 rounded-md shadow-sm max-w-2xl flex flex-col gap-2 hover:shadow-2xl transition group">
               <div className="flex justify-between gap-8 items-center">
                 <h3 className="text-xl font-semibold">{title}</h3>
                 <h4 className="text-xs uppercase w-full max-w-max">{`{ ${language} }`}</h4>
